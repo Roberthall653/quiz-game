@@ -1,27 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>CSS Box Styling</title>
+
+<head>
+    <title>Coding Quiz</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-  </head>
-  <body>
-<nav>
-    <a href="#">View high scores</a>
-    <div class= "card timer">
-        <div class = "timer-text">
-        <div class="large-font timer-count">Time: 60</div>
+</head>
+
+<body>
+    <nav>
+        <a href="#">View high scores</a>
+        <div class="card timer">
+            <div class="timer-text">
+                <div class="large-font timer-count">Time: 60</div>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-    <header>
-      <div class= "large-font">Word Guess Game</div>
-      <button class="start-button">Start</button>
-    </header>
+    <main>
+        <div>
+            <h1 class="large-font text-bank">Coding Quiz Challenge</h1>
+        </div>
+        <div>
+            <button class="start-button">Start</button>
+            <div class="answers">
+                <button id="answer1"></button>
+                <button id="answer2"></button>
+                <button id="answer3"></button>
+                <button id="answer4"></button>
+            </div>
+            <button class="restart">Restart Game</button>
+        </div>
+        <div>
+            <h2 class="outcome"></h2>
+        </div>
+    </main>
 
- 
+
     <script src="assets/js/script.js"></script>
-  </body>
+</body>
+
 </html>

@@ -3,3 +3,16 @@ nav {
     justify-content: space-between;
 }
 
+main {
+    text-align: center;
+    padding: 20px;
+}
+
+main button {
+    margin: 20px;
+}
+
+.answers {
+    display: block;
+    column-count: 1;
+}
