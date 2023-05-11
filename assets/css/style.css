@@ -1,5 +1,8 @@
 nav {
     display: flex;
+    padding: 20px;
+    background-color: aquamarine;
+    font-size: 24pt;
     justify-content: space-between;
 }
 

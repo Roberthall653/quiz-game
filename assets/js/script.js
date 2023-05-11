@@ -24,7 +24,7 @@ var questions = [question1, question2, question3];
 var storedScore = [];
 
 
-
+//shuffles button text so no replay is the same
 function shuffle(array) {
     let currentIndex = array.length, randomIndex;
 
@@ -42,7 +42,7 @@ function shuffle(array) {
 
     return array;
 }
-
+//checks to see if there are questions left and either moves to the next or triggers a win.
 nextQuestion = function () {
     if (questions.length === 0) {
         return winGame();
@@ -53,14 +53,17 @@ nextQuestion = function () {
 
 }
 
-
+//function for displaying a correct answer
 function correct() {
     outcomes.textContent = "Correct"
 }
 
+//function for displaying an incorrect answer
 function incorrect() {
     outcomes.textContent = "Incorrect"
 }
+
+//checks whether answer is correct. Moves to the next question if correct, deducts points if not.
 function checkanswer(event) {
     if (event.target.textContent === correctAns) {
         correct();
@@ -75,6 +78,7 @@ function checkanswer(event) {
     }
 }
 
+//bank of questions
 function question1() {
     textBank.textContent = "What is question 1?";
     correctAns = "booleans"
@@ -108,6 +112,7 @@ function question3() {
     answer4.textContent = answerArray[3];
 }
 
+//game loss state
 function loseGame() {
     textBank.textContent = "GAME OVER";
     answers.style.display = 'none'
@@ -119,7 +124,7 @@ function loseGame() {
 }
 
 
-
+//starting page code
 function init() {
     hideButtons();
     textBank.textContent = "Coding Quiz Challenge";
@@ -132,6 +137,7 @@ function init() {
     }
 }
 
+//used to hide various buttons that appear throughout the game
 function hideButtons() {
     answers.style.display = 'none';
     initials.style.display = 'none';
@@ -147,7 +153,6 @@ function startGame() {
     questions[0]();
     // Prevents start button from being clicked when round is in progress
     startButton.style.display = 'none';
-
     answers.style.display = ''
     startTimer()
 }
@@ -174,7 +179,7 @@ function startTimer() {
     }, 1000);
 }
 
-
+//game win state
 function winGame() {
     textBank.textContent = "You Win!"
     answers.style.display = 'none';
@@ -185,6 +190,7 @@ function winGame() {
 
 }
 
+//stores scores for the scoreCard
 submit.addEventListener("click", function (event) {
     event.preventDefault();
     storedScore = JSON.parse(localStorage.getItem("scoreInfo"));
@@ -200,6 +206,7 @@ submit.addEventListener("click", function (event) {
     console.log(scoreInfo);
 });
 
+//displays the stored scores
 function renderScores() {
     clearButton.style.display = ''
     scoreCard.style.display = ''
@@ -225,6 +232,7 @@ function renderScores() {
     }
 }
 
+//clears scores from the scoreCard
 function clearScores() {
     storedScore = [];
     localStorage.setItem("scoreInfo", JSON.stringify(storedScore));
@@ -236,7 +244,6 @@ function clearScores() {
 
 init();
 
-// Attach event listener to start button to call startGame function on click
 startButton.addEventListener("click", startGame);
 
 answers.addEventListener("click", checkanswer);
