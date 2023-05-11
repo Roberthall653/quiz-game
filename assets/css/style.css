@@ -13,6 +13,7 @@ main {
 
 main button {
     margin: 20px;
+    background-color: aquamarine;
 }
 
 .answers {
