@@ -10,7 +10,7 @@
 
 <body>
     <nav>
-        <a href="#">View high scores</a>
+        <a href="#" id="scores">View high scores</a>
         <div class="card timer">
             <div class="timer-text">
                 <div class="large-font timer-count">Time: 60</div>
@@ -31,6 +31,12 @@
                 <button id="answer4"></button>
             </div>
             <button class="restart">Restart Game</button>
+            <button class="clear">Clear High Scores</button>
+            <input id="initials"></input>
+            <button class="submit">Submit</button>
+        </div>
+        <div>
+            <ol id="scoreCard"></ol>
         </div>
         <div>
             <h2 class="outcome"></h2>

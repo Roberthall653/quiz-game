@@ -4,11 +4,15 @@ var lose = document.querySelector(".lose");
 var timerElement = document.querySelector(".timer-count");
 var startButton = document.querySelector(".start-button");
 var restartButton = document.querySelector(".restart");
+var clearButton = document.querySelector(".clear")
 var answers = document.querySelector(".answers");
 var answer1 = document.querySelector("#answer1");
 var answer2 = document.querySelector("#answer2");
 var answer3 = document.querySelector("#answer3");
 var answer4 = document.querySelector("#answer4");
+var initials = document.querySelector("#initials");
+var scores = document.querySelector("#scores")
+var submit = document.querySelector(".submit");
 var answerArray = [""];
 var buttonAns = ""
 var correctAns = ""
@@ -17,6 +21,8 @@ var isWin = false;
 var timer;
 var timerCount;
 var questions = [question1, question2, question3];
+var storedScore = [];
+
 
 
 function shuffle(array) {
@@ -37,6 +43,17 @@ function shuffle(array) {
     return array;
 }
 
+nextQuestion = function () {
+    if (questions.length === 0) {
+        return winGame();
+
+    } else {
+        return questions[0]();
+    }
+
+}
+
+
 function correct() {
     outcomes.textContent = "Correct"
 }
@@ -45,22 +62,17 @@ function incorrect() {
     outcomes.textContent = "Incorrect"
 }
 function checkanswer(event) {
-        if (event.target.textContent === correctAns) {
-            correct();
-            }
-        
-        else {
-            timerCount-= 15;
-            incorrect();
-        }
+    if (event.target.textContent === correctAns) {
+        correct();
+        questions.shift();
+        nextQuestion();
+
     }
 
-function correct() {
-    outcomes.textContent = "Correct"
-}
-
-function incorrect() {
-    outcomes.textContent = "Incorrect"
+    else {
+        timerCount -= 15;
+        incorrect();
+    }
 }
 
 function question1() {
@@ -99,33 +111,44 @@ function question3() {
 function loseGame() {
     textBank.textContent = "GAME OVER";
     answers.style.display = 'none'
-    restartButton.style.display = 'block'
+    outcomes.style.display = 'none'
+    clearButton.style.display = 'none'
+    restartButton.style.display = ''
+    initials.style.display = ''
+    submit.style.display = ''
 }
 
 
 
 function init() {
-    hideAnswers();
-    hideRestart();
+    hideButtons();
+    textBank.textContent = "Coding Quiz Challenge";
+    startButton.style.display = ''
+    scoreCard.style.display = 'none'
+    clearButton.style.display = 'none'
+    var storedScore = JSON.parse(localStorage.getItem("scores"));
+    if (storedScore !== null) {
+        scores = storedScore;
+    }
 }
 
-function hideAnswers() {
+function hideButtons() {
     answers.style.display = 'none';
-}
-
-function hideRestart() {
+    initials.style.display = 'none';
+    submit.style.display = 'none';
     restartButton.style.display = 'none';
+    clearButton.style.display = 'none'
 }
 
 // The startGame function is called when the start button is clicked
 function startGame() {
-    isWin = false;
+    questions = [question1, question2, question3];
     timerCount = 60;
     questions[0]();
-    console.log(questions[0])
     // Prevents start button from being clicked when round is in progress
     startButton.style.display = 'none';
-    answers.style.display = 'flex'
+
+    answers.style.display = ''
     startTimer()
 }
 
@@ -137,12 +160,13 @@ function startTimer() {
         timerElement.textContent = "Time: " + timerCount;
         if (timerCount >= 0) {
             // Tests if win condition is met
-            if (isWin && timerCount > 0) {
+            if (timerCount > 0 && nextQuestion.length >= 4) {
                 winGame();
             }
         }
         // Tests if time has run out
         if (timerCount <= 0) {
+            timerElement.textContent = "Time:" + 0;
             // Clears interval
             clearInterval(timer);
             loseGame();
@@ -150,9 +174,75 @@ function startTimer() {
     }, 1000);
 }
 
+
+function winGame() {
+    textBank.textContent = "You Win!"
+    answers.style.display = 'none';
+    outcomes.style.display = 'none'
+    initials.style.display = ''
+    submit.style.display = ''
+    clearInterval(timer);
+
+}
+
+submit.addEventListener("click", function (event) {
+    event.preventDefault();
+    storedScore = JSON.parse(localStorage.getItem("scoreInfo"));
+
+    var scoreInfo = {
+        initials: initials.value,
+        timerCount,
+    };
+    storedScore.push(scoreInfo);
+    localStorage.setItem("scoreInfo", JSON.stringify(storedScore));
+
+    renderScores();
+    console.log(scoreInfo);
+});
+
+function renderScores() {
+    clearButton.style.display = ''
+    scoreCard.style.display = ''
+    initials.style.display = 'none';
+    textBank.textContent = "High Scores:";
+    submit.style.display = 'none';
+    answers.style.display = 'none';
+    startButton.style.display = 'none';
+    restartButton.style.display = ''
+    clearInterval(timer);
+
+    storedScore = JSON.parse(localStorage.getItem("scoreInfo"));
+    storedScore.sort(function (x, y) {
+        return y.timerCount - x.timerCount;
+    });
+    for (var i = 0; i < storedScore.length; i++) {
+        var li = document.createElement("li");
+        li.textContent = "Name: " + storedScore[i].initials +
+            " Score: " + storedScore[i].timerCount;
+        storedScore.push;
+
+        scoreCard.appendChild(li);
+    }
+}
+
+function clearScores() {
+    storedScore = [];
+    localStorage.setItem("scoreInfo", JSON.stringify(storedScore));
+    scoreCard.style.display = 'none'
+    console.log(storedScore)
+}
+
+
+
 init();
 
 // Attach event listener to start button to call startGame function on click
 startButton.addEventListener("click", startGame);
 
 answers.addEventListener("click", checkanswer);
+
+scores.addEventListener("click", renderScores);
+
+restartButton.addEventListener("click", init);
+
+clearButton.addEventListener("click", clearScores)
