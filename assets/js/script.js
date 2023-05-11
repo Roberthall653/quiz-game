@@ -81,7 +81,7 @@ function checkanswer(event) {
 //bank of questions
 function question1() {
     textBank.textContent = "commonly used data types do NOT include:";
-    correctAns = "booleans"
+    correctAns = "alerts"
     answerArray = ["strings", "booleans", "alerts", "numbers"]
     shuffle(answerArray);
     answer1.textContent = answerArray[0];
