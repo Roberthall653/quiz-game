@@ -80,7 +80,7 @@ function checkanswer(event) {
 
 //bank of questions
 function question1() {
-    textBank.textContent = "What is question 1?";
+    textBank.textContent = "commonly used data types do NOT include:";
     correctAns = "booleans"
     answerArray = ["strings", "booleans", "alerts", "numbers"]
     shuffle(answerArray);
@@ -91,9 +91,9 @@ function question1() {
 }
 
 function question2() {
-    textBank.textContent = "What is question 2?";
-    correctAns = "strings"
-    answerArray = ["strings", "booleans", "alerts", "numbers"]
+    textBank.textContent = "Arrays in JavaScript can be used to store ______:";
+    correctAns = "all"
+    answerArray = ["numbers and strings", "booleans", "other arrays", "all"]
     shuffle(answerArray);
     answer1.textContent = answerArray[0];
     answer2.textContent = answerArray[1];
@@ -102,9 +102,9 @@ function question2() {
 }
 
 function question3() {
-    textBank.textContent = "What is question 3?";
-    correctAns = "numbers"
-    answerArray = ["strings", "booleans", "alerts", "numbers"]
+    textBank.textContent = "String values must be enclosed within ______ when being assigned to variables?";
+    correctAns = "quotes"
+    answerArray = ["commas", "quotes", "curly braackets", "parenthesis"]
     shuffle(answerArray);
     answer1.textContent = answerArray[0];
     answer2.textContent = answerArray[1];
